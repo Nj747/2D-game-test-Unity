@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemiesBehavior : MonoBehaviour {
+    public float velocity;
+    Rigidbody2D objeto;
+    public float limRight;
+    public float limLeft;
+    private int shiftMove;
+
+    void Start() {
+        objeto = GetComponent<Rigidbody2D>();
+        objeto.transform.Translate(velocity * Time.deltaTime, 0, 0);
+        shiftMove = 0;
+    }
+
+    void Update() {
+
+        if (objeto.position.x <= limRight && shiftMove == 0) {
+            objeto.transform.Translate(velocity * Time.deltaTime, 0, 0);
+        }
+        else if (objeto.position.x > limRight) {
+            objeto.transform.Translate(-velocity * Time.deltaTime, 0, 0);
+            shiftMove = 1;
+        }
+        else if (shiftMove == 1 && objeto.position.x >= limLeft) {
+            objeto.transform.Translate(-velocity * Time.deltaTime, 0, 0);
+        }
+        else if (objeto.position.x < limLeft) {
+            objeto.transform.Translate(velocity*Time.deltaTime,0,0);
+            shiftMove = 0;
+        }
+    }
+
+}
